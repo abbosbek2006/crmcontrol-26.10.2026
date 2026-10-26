@@ -1,0 +1,132 @@
+/* =====================================================================
+   Yagona animatsiya tizimi (motion system)
+   Har bir element turi o'z vazifasiga mos harakat qiladi:
+   - sahifa almashuvi: oldinga — o'ngdan, orqaga — chapdan (View Transitions)
+   - oddiy oyna (dialog): markazdan yumshoq kattalashadi; telefonda pastdan ko'tariladi
+   - tasdiqlash oynasi: qisqa "pop"
+   - qidiruv paneli: tepadan tushadi
+   - ochiladigan ro'yxat: tugmadan pastga yoyiladi
+   - mobil menyu: chapdan suriladi; savatcha oynasi: pastdan chiqadi
+   Yopilish (teskari) animatsiyalari src/utils/motion.js da.
+   Hammasi 0,4 soniyadan qisqa; "harakatni kamaytirish" yoqilgan bo'lsa o'chiriladi.
+   ===================================================================== */
+
+:root {
+  --m-fast: 160ms;
+  --m-base: 240ms;
+  --m-slow: 320ms;
+  --m-ease-out: cubic-bezier(.2, .8, .2, 1);
+  --m-ease-spring: cubic-bezier(.22, 1.18, .36, 1);
+  --m-ease-in: cubic-bezier(.4, 0, 1, 1);
+}
+
+@keyframes m-fade-in { from { opacity: 0; } }
+@keyframes m-dialog-in { from { opacity: 0; transform: translateY(10px) scale(.96); } }
+@keyframes m-sheet-rise-in { from { opacity: 0; transform: translateY(28px); } }
+@keyframes m-alert-in { from { opacity: 0; transform: scale(.9); } }
+@keyframes m-drop-in { from { opacity: 0; transform: translateY(-14px) scale(.98); } }
+@keyframes m-menu-in { from { opacity: 0; transform: translateY(-6px) scale(.97); } }
+@keyframes m-drawer-in { from { transform: translateX(-100%); } }
+@keyframes m-sheet-up { from { opacity: .4; transform: translateY(100%); } }
+@keyframes m-rise-in { from { opacity: 0; transform: translateY(8px); } }
+
+/* ---------- Sahifa almashuvi (View Transitions API) ----------
+   Faqat asosiy kontent maydoni harakatlanadi; yuqori panel va menyu joyida turadi.
+   transform sahifaning o'ziga emas, uning tasviriga qo'llanadi — fixed elementlar buzilmaydi.
+   view-transition-name faqat o'tish davomida qo'yiladi (src/utils/motion.js), doimiy emas:
+   aks holda kontent alohida qatlam bo'lib, ichidagi fixed oynalar yuqori panelni yopmay qolardi. */
+::view-transition-old(root),
+::view-transition-new(root) { animation: none; }
+::view-transition-group(app-page) { animation-duration: var(--m-slow); }
+::view-transition-old(app-page) { animation: var(--m-fast) var(--m-ease-in) both m-page-out-forward; }
+::view-transition-new(app-page) { animation: var(--m-slow) var(--m-ease-out) both m-page-in-forward; }
+html[data-nav-direction="back"]::view-transition-old(app-page) { animation-name: m-page-out-back; }
+html[data-nav-direction="back"]::view-transition-new(app-page) { animation-name: m-page-in-back; }
+@keyframes m-page-out-forward { to { opacity: 0; transform: translateX(-18px); } }
+@keyframes m-page-in-forward { from { opacity: 0; transform: translateX(22px); } }
+@keyframes m-page-out-back { to { opacity: 0; transform: translateX(18px); } }
+@keyframes m-page-in-back { from { opacity: 0; transform: translateX(-22px); } }
+
+/* ---------- Oddiy oynalar ---------- */
+/* Kontent maydonidagi oynalar (sahifalardagi portal oynalar) */
+#main-modal-root > .crm-content-modal:not([data-motion="manual"]) {
+  animation: m-fade-in var(--m-base) var(--m-ease-out) backwards;
+}
+#main-modal-root > .crm-content-modal:not([data-motion="manual"]) > * {
+  animation: m-dialog-in var(--m-slow) var(--m-ease-spring) backwards;
+  transform-origin: 50% 40%;
+}
+/* Sahifalarning o'z oynalari: Mijozlar oynasi va POS "Savatchadagi barcha mahsulotlar" */
+.customers-modal-overlay,
+.pos-cart-all-overlay { animation: m-fade-in var(--m-base) var(--m-ease-out) backwards; }
+.customers-modal-overlay > *,
+.pos-cart-all-overlay > * { animation: m-dialog-in var(--m-slow) var(--m-ease-spring) backwards; transform-origin: 50% 40%; }
+/* Umumiy Modal komponenti */
+.motion-overlay { animation: m-fade-in var(--m-base) var(--m-ease-out) backwards; }
+.motion-dialog { animation: m-dialog-in var(--m-slow) var(--m-ease-spring) backwards; transform-origin: 50% 40%; }
+.motion-overlay.is-closing { animation: m-fade-out var(--m-fast) var(--m-ease-in) forwards; pointer-events: none; }
+.motion-dialog.is-closing { animation: m-dialog-out var(--m-fast) var(--m-ease-in) forwards; }
+@keyframes m-fade-out { to { opacity: 0; } }
+@keyframes m-dialog-out { to { opacity: 0; transform: translateY(8px) scale(.97); } }
+
+/* Tasdiqlash oynasi (ConfirmDialog, AI tasdiq) */
+.motion-alert { animation: m-alert-in var(--m-base) var(--m-ease-spring) backwards; }
+.motion-alert.is-closing { animation: m-alert-out var(--m-fast) var(--m-ease-in) forwards; }
+@keyframes m-alert-out { to { opacity: 0; transform: scale(.94); } }
+.ai-confirm { animation: m-fade-in var(--m-base) var(--m-ease-out) backwards; }
+.ai-confirm > * { animation: m-alert-in var(--m-base) var(--m-ease-spring) backwards; }
+
+/* Qidiruv paneli (Topbar) — tepadan tushadi */
+.motion-drop { animation: m-drop-in var(--m-base) var(--m-ease-spring) backwards; transform-origin: 50% 0; }
+
+/* ---------- Ochiladigan ro'yxatlar ---------- */
+.sales-product-options,
+.supplier-learned-options,
+.pos-address-popover {
+  animation: m-menu-in var(--m-fast) var(--m-ease-out) backwards;
+  transform-origin: 50% 0;
+}
+.sales-product-options { transform-origin: 100% 0; }
+
+/* ---------- Mobil menyu va savatcha ---------- */
+aside.mobile-sidebar-active { animation: m-drawer-in var(--m-base) var(--m-ease-out) backwards !important; }
+.sidebar-overlay { animation: m-fade-in var(--m-base) var(--m-ease-out) backwards !important; }
+.pos-container.pos-split-layout .pos-cart-window.is-open { animation: m-sheet-up var(--m-slow) var(--m-ease-out) backwards; }
+
+/* ---------- Super Admin ---------- */
+.sa-modal { animation: m-fade-in var(--m-base) var(--m-ease-out) backwards; }
+.sa-modal > form { animation: m-dialog-in var(--m-slow) var(--m-ease-spring) backwards; }
+/* Bo'limlar almashganda yangi kontent yumshoq ko'tariladi */
+.sa-content main > section,
+.sa-content main > article { animation: m-rise-in var(--m-base) var(--m-ease-out) backwards; }
+.sa-content main > section + section { animation-delay: 40ms; }
+.sa-content main > section + section + section { animation-delay: 80ms; }
+
+/* ---------- Telefonda oynalar pastdan ko'tariladi ---------- */
+@media (max-width: 600px) {
+  #main-modal-root > .crm-content-modal:not([data-motion="manual"]) > *,
+  .customers-modal-overlay > *,
+  .pos-cart-all-overlay > *,
+  .motion-dialog,
+  .sa-modal > form { animation-name: m-sheet-rise-in; }
+  .motion-dialog.is-closing { animation-name: m-sheet-sink-out; }
+}
+@keyframes m-sheet-sink-out { to { opacity: 0; transform: translateY(24px); } }
+
+/* Yopilayotgan nusxada ochilish animatsiyasi qayta o'ynamasin (yopilishni JS boshqaradi). */
+[data-motion-ghost],
+[data-motion-ghost] * { animation: none !important; transition: none !important; }
+
+/* ---------- Harakatni kamaytirish ---------- */
+@media (prefers-reduced-motion: reduce) {
+  #main-modal-root > .crm-content-modal > *,
+  #main-modal-root > .crm-content-modal,
+  .customers-modal-overlay, .customers-modal-overlay > *, .pos-cart-all-overlay, .pos-cart-all-overlay > *,
+  .motion-overlay, .motion-dialog, .motion-alert, .motion-drop, .ai-confirm, .ai-confirm > *,
+  .sales-product-options, .supplier-learned-options, .pos-address-popover,
+  aside.mobile-sidebar-active, .sidebar-overlay, .pos-cart-window.is-open,
+  .sa-modal, .sa-modal > form, .sa-content main > section, .sa-content main > article {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+  }
+}

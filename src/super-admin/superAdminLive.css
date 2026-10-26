@@ -1,0 +1,62 @@
+/* Super Admin: jonli holat ko'rsatkichlari. */
+
+/* Tizim holati: yashil — barqaror, sariq — xatolik/ogohlantirish, qizil — ishlamayapti. */
+.sa-system-state { transition: background-color .25s ease, border-color .25s ease, color .25s ease; }
+.sa-system-state span { transition: background-color .25s ease, box-shadow .25s ease; }
+.sa-system-state.is-ok span { animation: sa-live-pulse 2.4s ease-in-out infinite; }
+.sa-system-state.is-warning { border-color: #ffe0a3; background: #fffaf0; color: #7a4b00; }
+.sa-system-state.is-warning span { background: #f5a524; box-shadow: 0 0 0 7px #f5a5241f; }
+.sa-system-state.is-warning small { color: #a8752a; }
+.sa-system-state.is-down { border-color: #ffc9c9; background: #fff4f4; color: #a51d24; }
+.sa-system-state.is-down span { background: #ef4444; box-shadow: 0 0 0 7px #ef44441f; animation: sa-live-pulse 1.2s ease-in-out infinite; }
+.sa-system-state.is-down small { color: #c24b50; }
+@keyframes sa-live-pulse { 50% { box-shadow: 0 0 0 3px transparent; } }
+
+/* Bosiladigan statistika kartalari */
+.sa-stat-link { width: 100%; font: inherit; color: inherit; text-align: inherit; cursor: pointer; transition: border-color .2s ease, box-shadow .2s ease, transform .15s ease; }
+.sa-stat-link:hover { border-color: #c9d8f6; box-shadow: 0 16px 30px -18px #1a3e8a59; }
+.sa-stat-link:active { transform: scale(.98); }
+.sa-stat-link:focus-visible { outline: 2px solid #1463f3; outline-offset: 2px; }
+
+/* Jadvaldagi holat belgisi */
+.sa-live { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; white-space: nowrap; }
+.sa-live i { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.sa-live.is-online { color: #0fa968; }
+.sa-live.is-online i { box-shadow: 0 0 0 0 #0fa96866; animation: sa-dot-ping 1.8s ease-out infinite; }
+.sa-live.is-offline { color: #8391ad; }
+.sa-live.is-never { color: #a9b3c7; font-weight: 600; }
+.sa-live em { margin-left: 2px; padding: 2px 7px; border-radius: 999px; background: #fff0f0; color: #e5484d; font-size: 11px; font-style: normal; font-weight: 700; }
+@keyframes sa-dot-ping { 70% { box-shadow: 0 0 0 6px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+
+.sa-last { display: grid; gap: 2px; min-width: 0; }
+.sa-last b { color: #1c2a4f; font-size: 13px; font-weight: 600; white-space: nowrap; }
+.sa-last small { overflow: hidden; color: #8391ad; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Live Monitoring qatorlari */
+.sa-monitor { align-items: center; }
+.sa-monitor-name { display: grid; gap: 2px; flex: 1 1 160px; min-width: 0; }
+.sa-monitor-name small { color: #8391ad; font-size: 12px; }
+.sa-monitor-meta { display: grid; gap: 2px; flex: 0 1 170px; min-width: 0; color: #1c2a4f; font-size: 13px; }
+.sa-monitor-meta small { color: #8391ad; font-size: 11px; }
+.sa-card-title .sa-system-state { min-width: 0; padding: 8px 12px; font-size: 12px; }
+
+/* Xatoliklar ro'yxati */
+.sa-alert-list { display: grid; gap: 8px; max-height: 420px; overflow-y: auto; overscroll-behavior: contain; }
+.sa-alert-list .sa-alert { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.sa-alert-list .sa-alert > div { display: grid; gap: 3px; min-width: 0; }
+.sa-alert-list .sa-alert b { color: #8f1f24; font-size: 13px; }
+.sa-alert-list .sa-alert p { margin: 0; color: #b8323a; overflow-wrap: anywhere; }
+.sa-alert-list .sa-alert small { color: #c26a6f; font-size: 11px; }
+.sa-alert-list .sa-alert button { flex-shrink: 0; padding: 6px 10px; border: 1px solid #f3c2c4; border-radius: 9px; background: #fff; color: #b8323a; font: 700 12px Inter, sans-serif; cursor: pointer; }
+.sa-alert-list .sa-alert button:hover { background: #ffe9ea; }
+
+@media (max-width: 900px) {
+  /* Telefonda ham tizim holati ko'rinib tursin. */
+  .sa-heading .sa-system-state { display: grid; width: 100%; box-sizing: border-box; margin-top: 10px; padding: 10px 12px; }
+  .sa-monitor { flex-wrap: wrap; gap: 8px 14px; }
+  .sa-card-title .sa-system-state { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sa-system-state span, .sa-live i { animation: none !important; }
+}

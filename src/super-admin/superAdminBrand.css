@@ -1,0 +1,19 @@
+.sa-tenant-edit {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin-left: 8px;
+  padding: 0;
+  border: 1px solid #dbe6f8;
+  border-radius: 8px;
+  background: #fff;
+  color: #3567dc;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.sa-tenant-edit:hover {
+  background: #eef4ff;
+  border-color: #b8ccf5;
+}

@@ -1,0 +1,289 @@
+/* Super Admin sozlamalari — Control Center uslubida premium ko'rinish. */
+.sas-page {
+  --sas-ink: #15224b;
+  --sas-muted: #66779c;
+  --sas-faint: #93a1bd;
+  --sas-line: #e3eaf8;
+  --sas-soft: #f4f7ff;
+  --sas-brand: #1463f3;
+  --sas-brand-2: #6d4cff;
+  --sas-danger: #e5484d;
+  --sas-success: #16a36a;
+  --sas-radius: 20px;
+  color: var(--sas-ink);
+}
+
+.sas-layout {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+/* ---------- Chap panel: profil kartasi va bo'limlar ---------- */
+.sas-side { position: sticky; top: 16px; display: grid; gap: 14px; }
+
+.sas-hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 22px 18px;
+  overflow: hidden;
+  border-radius: var(--sas-radius);
+  background:
+    radial-gradient(120% 140% at 100% 0%, rgba(140, 115, 255, .55) 0%, transparent 55%),
+    linear-gradient(135deg, #0f1c48 0%, #1846c7 58%, #3f5bff 100%);
+  color: #fff;
+  box-shadow: 0 18px 40px -22px rgba(20, 60, 180, .75);
+}
+.sas-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .28);
+  pointer-events: none;
+}
+.sas-hero-avatar {
+  display: grid;
+  place-items: center;
+  flex: 0 0 56px;
+  height: 56px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .16);
+  border: 1px solid rgba(255, 255, 255, .32);
+  font: 800 19px/1 Manrope, Inter, sans-serif;
+  letter-spacing: .02em;
+  backdrop-filter: blur(6px);
+}
+.sas-hero-text { display: grid; gap: 6px; min-width: 0; }
+.sas-hero-text b { overflow: hidden; font: 800 17px/1.2 Manrope, Inter, sans-serif; text-overflow: ellipsis; white-space: nowrap; }
+.sas-hero-text small { overflow: hidden; color: rgba(255, 255, 255, .72); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.sas-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  width: max-content;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .16);
+  color: #ffe9a8;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+
+.sas-nav {
+  display: grid;
+  gap: 4px;
+  padding: 8px;
+  border: 1px solid var(--sas-line);
+  border-radius: var(--sas-radius);
+  background: #fff;
+  box-shadow: 0 10px 30px -24px rgba(21, 34, 75, .5);
+}
+.sas-nav button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px;
+  border: 0;
+  border-radius: 14px;
+  background: transparent;
+  color: var(--sas-ink);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color .18s ease, transform .18s ease;
+}
+.sas-nav button:hover { background: var(--sas-soft); }
+.sas-nav button:active { transform: scale(.98); }
+.sas-nav button.is-active { background: linear-gradient(135deg, #eef3ff, #f3efff); box-shadow: inset 0 0 0 1px #d7e2ff; }
+.sas-nav button.is-active .sas-tile-icon { background: linear-gradient(135deg, var(--sas-brand), var(--sas-brand-2)); color: #fff; box-shadow: 0 8px 18px -10px rgba(20, 99, 243, .9); }
+.sas-nav-text { display: grid; gap: 2px; min-width: 0; }
+.sas-nav-text b { font-size: 14px; font-weight: 700; }
+.sas-nav-text small { overflow: hidden; color: var(--sas-muted); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+
+.sas-tile-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: var(--sas-soft);
+  color: var(--sas-brand);
+  transition: background .18s ease, color .18s ease;
+}
+
+/* ---------- O'ng panel ---------- */
+.sas-content { display: grid; gap: 16px; min-width: 0; animation: sas-in .28s ease both; }
+@keyframes sas-in { from { opacity: 0; transform: translateY(6px); } }
+
+.sas-card {
+  display: grid;
+  gap: 18px;
+  padding: 22px;
+  border: 1px solid var(--sas-line);
+  border-radius: var(--sas-radius);
+  background: #fff;
+  box-shadow: 0 14px 34px -28px rgba(21, 34, 75, .55);
+}
+.sas-section-head { display: flex; align-items: flex-start; gap: 14px; }
+.sas-section-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #eaf1ff, #f1ecff);
+  color: var(--sas-brand);
+}
+.sas-section-head h3 { margin: 0 0 4px; font: 800 17px/1.25 Manrope, Inter, sans-serif; color: var(--sas-ink); }
+.sas-section-head p { margin: 0; color: var(--sas-muted); font-size: 13px; line-height: 1.5; }
+
+.sas-grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 16px; }
+
+.sas-field { display: grid; gap: 7px; min-width: 0; }
+.sas-field-label { color: #3a4b74; font-size: 12px; font-weight: 700; letter-spacing: .01em; }
+.sas-field-hint { color: var(--sas-faint); font-size: 11px; }
+.sas-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 46px;
+  padding: 0 12px;
+  border: 1px solid var(--sas-line);
+  border-radius: 13px;
+  background: #f8faff;
+  color: var(--sas-faint);
+  transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.sas-input:focus-within { border-color: var(--sas-brand); background: #fff; box-shadow: 0 0 0 4px rgba(20, 99, 243, .12); color: var(--sas-brand); }
+.sas-input input { flex: 1; min-width: 0; height: 100%; border: 0; outline: 0; background: transparent; color: var(--sas-ink); font: 500 14px Inter, sans-serif; }
+.sas-input input::placeholder { color: #a9b5cc; }
+.sas-input input[readonly] { color: var(--sas-muted); cursor: default; }
+.sas-eye { display: grid; place-items: center; width: 30px; height: 30px; margin-right: -4px; border: 0; border-radius: 9px; background: transparent; color: var(--sas-faint); cursor: pointer; }
+.sas-eye:hover { background: var(--sas-soft); color: var(--sas-brand); }
+
+.sas-actions { display: flex; justify-content: flex-end; gap: 10px; }
+.sas-actions.is-start { justify-content: flex-start; }
+
+.sas-btn-primary,
+.sas-btn-ghost,
+.sas-btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 13px;
+  font: 700 14px Inter, sans-serif;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .2s ease, opacity .2s ease, background .2s ease;
+}
+.sas-btn-primary { border: 0; background: linear-gradient(135deg, var(--sas-brand), #3d5cff); color: #fff; box-shadow: 0 12px 24px -14px rgba(20, 99, 243, .9); }
+.sas-btn-primary:hover:not(:disabled) { box-shadow: 0 16px 28px -14px rgba(20, 99, 243, 1); }
+.sas-btn-primary:active:not(:disabled), .sas-btn-ghost:active, .sas-btn-danger:active { transform: scale(.97); }
+.sas-btn-primary:disabled { opacity: .55; cursor: not-allowed; box-shadow: none; }
+.sas-btn-ghost { border: 1px solid var(--sas-line); background: #fff; color: var(--sas-ink); }
+.sas-btn-ghost:hover { border-color: #c9d6f3; background: var(--sas-soft); }
+.sas-btn-danger { border: 0; background: var(--sas-danger); color: #fff; }
+.sas-num { font-variant-numeric: tabular-nums; }
+
+.sas-error { margin: 0; padding: 10px 12px; border-radius: 12px; background: #fff1f1; color: var(--sas-danger); font-size: 13px; font-weight: 600; }
+
+/* Holat kartalari */
+.sas-stat-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.sas-stat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 14px 16px;
+  border: 1px solid var(--sas-line);
+  border-radius: 16px;
+  background: #fff;
+  color: var(--sas-brand);
+}
+.sas-stat > div { display: grid; gap: 3px; min-width: 0; }
+.sas-stat small { color: var(--sas-muted); font-size: 11px; font-weight: 600; }
+.sas-stat b { overflow: hidden; color: var(--sas-ink); font-size: 13px; font-variant-numeric: tabular-nums; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Parol kuchi */
+.sas-strength { display: flex; align-items: center; gap: 12px; color: var(--sas-muted); font-size: 12px; }
+.sas-strength-bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; flex: 0 0 160px; }
+.sas-strength-bar i { height: 6px; border-radius: 99px; background: #e8edf7; transition: background .25s ease; }
+.sas-strength.is-weak .is-filled { background: var(--sas-danger); }
+.sas-strength.is-fair .is-filled { background: #f5a524; }
+.sas-strength.is-good .is-filled { background: #3d8bff; }
+.sas-strength.is-strong .is-filled { background: var(--sas-success); }
+
+/* Segmentli tanlov */
+.sas-segmented { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; padding: 4px; border-radius: 14px; background: var(--sas-soft); }
+.sas-segmented button { min-height: 40px; border: 0; border-radius: 11px; background: transparent; color: var(--sas-muted); font: 700 13px Inter, sans-serif; cursor: pointer; transition: background .2s ease, color .2s ease, box-shadow .2s ease; }
+.sas-segmented button:hover { color: var(--sas-ink); }
+.sas-segmented button.is-active { background: #fff; color: var(--sas-brand); box-shadow: 0 6px 16px -10px rgba(21, 34, 75, .6); }
+
+
+/* Kalitlar (switch) */
+.sas-switch-list { display: grid; gap: 4px; }
+.sas-switch-row { display: flex; align-items: center; gap: 12px; padding: 12px 4px; border-top: 1px solid #eef2fa; }
+.sas-switch-row:first-child { border-top: 0; }
+.sas-switch-text { display: grid; gap: 3px; flex: 1; min-width: 0; }
+.sas-switch-text b { font-size: 14px; }
+.sas-switch-text small { color: var(--sas-muted); font-size: 12px; line-height: 1.45; }
+.sas-switch { position: relative; flex: 0 0 48px; height: 28px; padding: 0; border: 0; border-radius: 99px; background: #d6deec; cursor: pointer; transition: background .25s ease; }
+.sas-switch span { position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(21, 34, 75, .25); transition: transform .28s cubic-bezier(.34, 1.56, .64, 1); }
+.sas-switch.is-on { background: linear-gradient(135deg, var(--sas-brand), var(--sas-brand-2)); }
+.sas-switch.is-on span { transform: translateX(20px); }
+
+/* Eslatma va zaxira ko'rinishi */
+.sas-note { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border-radius: 14px; font-size: 13px; line-height: 1.5; }
+.sas-note svg { flex-shrink: 0; margin-top: 1px; }
+.sas-note.is-warning { background: #fff7e8; color: #8a5a00; }
+.sas-preview { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)) auto; align-items: center; gap: 12px; padding: 14px; border: 1px dashed #c9d6f3; border-radius: 16px; background: #f8faff; }
+.sas-preview > div { display: grid; gap: 3px; min-width: 0; }
+.sas-preview small { color: var(--sas-muted); font-size: 11px; }
+.sas-preview b { overflow: hidden; font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
+
+:is(.sas-nav button, .sas-segmented button, .sas-switch, .sas-eye, .sas-btn-primary, .sas-btn-ghost, .sas-btn-danger):focus-visible { outline: 2px solid var(--sas-brand); outline-offset: 2px; }
+
+/* ---------- Moslashuv ----------
+   Ekran emas, sozlamalar sahifasining o'z kengligi hisobga olinadi (yon menyu ochiq bo'lsa ham to'g'ri joylashadi). */
+.sas-page { container: sas / inline-size; }
+
+@container sas (max-width: 900px) {
+  .sas-layout { grid-template-columns: minmax(0, 1fr); }
+  .sas-side { position: static; grid-template-columns: minmax(0, 1fr); }
+  .sas-nav { display: flex; gap: 6px; padding: 6px; overflow-x: auto; scrollbar-width: none; }
+  .sas-nav::-webkit-scrollbar { display: none; }
+  .sas-nav button { flex: 0 0 auto; width: auto; padding: 8px 14px 8px 8px; }
+  .sas-nav-text small { display: none; }
+  .sas-nav .sas-tile-icon { flex-basis: 32px; height: 32px; border-radius: 10px; }
+}
+
+@container sas (max-width: 720px) {
+  .sas-preview { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sas-preview .sas-btn-danger { grid-column: 1 / -1; }
+}
+
+@container sas (max-width: 560px) {
+  .sas-grid-2, .sas-stat-row { grid-template-columns: minmax(0, 1fr); }
+  .sas-card { padding: 16px; border-radius: 16px; }
+  .sas-hero { padding: 16px; border-radius: 16px; }
+  .sas-hero-avatar { flex-basis: 48px; height: 48px; border-radius: 15px; font-size: 17px; }
+  .sas-segmented { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sas-actions > button { flex: 1; }
+  .sas-strength { flex-wrap: wrap; }
+  .sas-strength-bar { flex-basis: 100%; }
+}
+
+@container sas (max-width: 380px) {
+  .sas-preview { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sas-content, .sas-switch span { animation: none; transition: none; }
+}

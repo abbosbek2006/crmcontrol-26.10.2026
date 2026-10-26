@@ -1,0 +1,16 @@
+# dependencies
+node_modules/
+
+# production build
+build/
+
+# environment variables
+.env
+.env*.local
+!.env.example
+
+# test cache
+.test-temp/
+
+# misc
+.DS_Store

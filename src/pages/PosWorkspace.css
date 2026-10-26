@@ -1,0 +1,35 @@
+
+.pos-workspace { height: 100%; min-height: 0; display: flex; flex-direction: column; }
+.pos-window-bar { display: flex; align-items: center; gap: 10px; padding: 12px 18px 10px 126px; border-bottom: 1px solid var(--border); flex-shrink: 0; background: var(--surface); }
+.pos-window-tabs { display: flex; gap: 8px; overflow-x: auto; min-width: 0; flex: 1; }
+.pos-window-tab { display: flex; flex-shrink: 0; align-items: center; border: 1px solid var(--border); background: var(--input-bg); border-radius: 12px; }
+.pos-window-tab.is-active { background: var(--brand-light); border-color: var(--brand); }
+.pos-window-tab button { display: flex; align-items: center; gap: 8px; padding: 10px 12px; min-height: 40px; border: 0; background: transparent; color: var(--text-primary); cursor: pointer; }
+.pos-window-tab span { max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; font-size: 13px; }
+.pos-window-tab small { color: var(--text-muted); white-space: nowrap; }
+.pos-window-tab .pos-window-close { padding: 8px; }
+.pos-window-new { display: flex; align-items: center; gap: 6px; min-height: 40px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 12px; color: var(--brand); background: var(--surface); white-space: nowrap; cursor: pointer; }
+.pos-window-bar button:disabled { opacity: .55; cursor: not-allowed; }
+.pos-workspace > .pos-container { flex: 1; min-height: 0; height: auto; }
+.pos-window-confirm { display: flex; gap: 12px; margin-top: 20px; }
+@media (max-width: 700px) { .pos-window-bar { padding: 10px 12px; } .pos-window-new { padding: 8px; } .pos-window-new span { display: none; } .pos-window-tab span { max-width: 100px; } .pos-window-tab button { padding: 8px; } }
+
+.pos-workspace { flex: 1 1 0%; min-width: 0; }
+.app-pos-content > .app-back-button:has(+ .pos-workspace) { top: 12px; }
+
+.pos-close-summary { border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.pos-close-customer { display: flex; align-items: center; gap: 12px; padding: 16px; }
+.pos-close-avatar { width: 44px; height: 44px; flex-shrink: 0; display: grid; place-items: center; border-radius: 14px; background: var(--input-bg); color: var(--text-primary); font-size: 18px; font-weight: 700; }
+.pos-close-customer > div { display: grid; gap: 4px; min-width: 0; }
+.pos-close-customer small { color: var(--text-muted); font-size: 12px; }
+.pos-close-customer strong { font-size: 16px; overflow-wrap: anywhere; }
+.pos-close-cart { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; background: var(--input-bg); }
+.pos-close-cart span { display: flex; gap: 8px; align-items: center; color: var(--text-muted); font-size: 12px; }
+.pos-close-cart strong { font-size: 15px; text-align: right; }
+.pos-close-warning { margin: 16px 0 0; color: var(--text-secondary); font-size: 13px; line-height: 1.65; }
+.pos-window-confirm { gap: 10px; }
+.pos-window-confirm button { flex: 1; min-height: 44px; padding: 10px 12px; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.pos-close-keep { border: 1px solid var(--border); background: var(--surface); color: var(--text-primary); }
+.pos-close-discard { border: 1px solid var(--danger); background: var(--danger); color: white; }
+.pos-window-confirm button:focus-visible { outline: 2px solid var(--text-muted); outline-offset: 3px; }
+@media (max-width: 420px) { .pos-window-confirm { flex-direction: column; } }
